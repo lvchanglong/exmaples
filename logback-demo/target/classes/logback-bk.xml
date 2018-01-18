@@ -23,14 +23,15 @@ debug: true或false，默认值为false。当值为true时，将输出logback内
         -->
         <encoder>
             <!--
-            pattern，日志输出模式，即日志信息格式化
+            pattern，日志输出模式，即格式化日志信息的输出
+            %: 转换关键字
             d或者date: 时间
             level: 日志级别门限
             thread: 线程
             logger: 对象类名称
-            file: 文件名，不含包名
+            file: 文件名（不含包名）
             line: 行号
-            message: 消息
+            message: 指定输出的信息，如logger.trace("Hello World !!!")中的Hello World !!!
             n: 换行
             relative: 耗时
             ...
