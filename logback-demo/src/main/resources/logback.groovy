@@ -1,15 +1,3 @@
-import ch.qos.logback.core.*;
-import ch.qos.logback.core.encoder.*;
-import ch.qos.logback.core.read.*;
-import ch.qos.logback.core.rolling.*;
-import ch.qos.logback.core.status.*;
-import ch.qos.logback.classic.net.*;
-import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
-import ch.qos.logback.core.rolling.RollingFileAppender
-import ch.qos.logback.core.rolling.TimeBasedRollingPolicy
-import static ch.qos.logback.classic.Level.DEBUG
-import static ch.qos.logback.classic.Level.INFO
-
 scan("60 seconds")
 
 appender("FILE", FileAppender) {
@@ -37,6 +25,6 @@ appender("STDOUT", ConsoleAppender) {
 }
 
 logger("grailslm.lvchanglong", INFO, ['ROLLINGFILE'], false)
-logger("grailslm.lvchanglong.HelloWorld")
+logger("grailslm.lvchanglong.HelloWorld", INFO)
 
 root(DEBUG, ["STDOUT", "FILE"])
