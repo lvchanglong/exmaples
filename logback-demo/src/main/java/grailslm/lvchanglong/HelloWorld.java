@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 public class HelloWorld {
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger("grailslm.lvchanglong.HelloWorld"); //root
-        logger.trace("Hello World !!!");
+        logger.debug("Hello World !!!");
 
-        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-        StatusPrinter.print(lc); //可简单理解为，查看logback实时运行状态
+//        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+//        StatusPrinter.print(lc); //可简单理解为，查看logback实时运行状态
     }
 }

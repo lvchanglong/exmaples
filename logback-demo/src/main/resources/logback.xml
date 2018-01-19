@@ -1,0 +1,92 @@
+<!--
+configuration，自定义配置的执行策略
+scan: 可以true或false，默认值为true。当值为true时，会每隔一段时间(scanPeriod)扫描一次配置文件，如果此时发现配置文件有过变动，就会将其重新进行载入。
+scanPeriod: 当scan为true时，此设置生效。可以设置扫描配置文件的时间间隔，默认为60秒。可选时间单位（milliseconds, seconds, minutes, hours）
+debug: true或false，默认值为false。当值为true时，会输出logback内部状态信息。换句话说，设定为true时，可理解为，能够实时查看logback的内部运行状态。
+-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!--
+    appender，自定义输出策略。
+    name: 唯一名称。
+    class: 类名，可以理解为输出的类别，常用类别有ch.qos.logback.core.ConsoleAppender（控制台输出）, ch.qos.logback.core.FileAppender（文件输出）, ch.qos.logback.core.rolling.RollingFileAppender（Rolling方式文件输出）...
+    -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!--
+        file: 文件所在路径（输出到...）
+        append: 是否追加？true，追加，新日志内容将被追加至文件末尾。false，替换，将用新日志内容来替换现有文件。默认是true
+        -->
+        <file>myApp.log</file>
+        <append>true</append>
+        <!--
+        encoder（或layout），负责日志信息格式化及实际输出工作。但有一点，需要特别注意，某些appender没有也不需要有Encoder或Layout，如SocketAppender
+        class: 默认值ch.qos.logback.classic.encoder.PatternLayoutEncoder
+        -->
+        <encoder>
+            <!--
+            pattern，日志输出模式，即日志信息的格式化
+            %: 转换关键字
+            d或者date: 时间
+            level: 日志门限等级
+            thread: 线程
+            logger: 对象类名称
+            file: 文件名（不含包名）
+            line: 行号
+            message: 指定的输出信息，如logger.trace("Hello World !!!")中的Hello World !!!
+            n: 换行
+            relative: 耗时
+            %-的-: 左对齐
+            %4的4: 最小宽度为4
+            ...
+            -->
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ROLLINGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--
+        每天生成一个日志文件，可以简单理解为，只保留最近30天的日志。
+        -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%message%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--
+    logger，负责日志信息的接收、过滤及以及委托appender进行输出。
+    name: 覆盖范围。可以是包名或者类名（如Hello）。同时揭示继承关系，root <- logger(grailslm) 如果有！！！<- logger(grailslm.lvchanglong) <- logger(grailslm.lvchanglong.Hello)
+    level: 设定日志门限等级，如果指定则进行“覆盖继承”。level“由低到高”依次是：ALL, TRACE, DEBUG, INFO, WARN, ERROR, OFF，策略是“高通”。
+    additivity: true或false，决定着appender的继承方式。值为true时，是附加继承；值为false时，是覆盖继承。
+
+    举例说明一下，首先，logger(grailslm.lvchanglong) -> root
+    root的门限等级是DEBUG，logger(grailslm.lvchanglong)门限等级是INFO，覆盖继承后，最终门限等级是INFO
+    root的appender是"FILE", "STDOUT"，logger(grailslm.lvchanglong)的appender是ROLLINGFILE，additivity="false"，覆盖继承，最终appender为ROLLINGFILE
+    -->
+    <logger name="grailslm.lvchanglong" level="INFO" additivity="false">
+        <appender-ref ref="ROLLINGFILE" /><!--将日志输出到动态创建的文件中-->
+    </logger>
+
+    <!--
+    举例说明一下，首先，logger(grailslm.lvchanglong.HelloWorld) -> logger(grailslm.lvchanglong)
+    门限等级未指定，覆盖继承后，最终门限等级是INFO
+    additivity未指定，默认值为true，appender继承方式为附加继承，最终appender为ROLLINGFILE
+    -->
+    <logger name="grailslm.lvchanglong.HelloWorld"/>
+
+    <!--
+    root，所有logger的父logger，name固定为root，additivity固定为false，level可选，默认是DEBUG
+    -->
+    <root level="DEBUG">
+        <appender-ref ref="FILE" /><!--将日志输出到“指定”的文件中-->
+        <appender-ref ref="STDOUT" /><!--将日志输出到控制台中-->
+    </root>
+</configuration>
