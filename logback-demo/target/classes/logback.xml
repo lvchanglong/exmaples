@@ -4,11 +4,11 @@ scan: 可以true或false，默认值为true。当值为true时，会每隔一段
 scanPeriod: 当scan为true时，此设置生效。可以设置扫描配置文件的时间间隔，默认为60秒。可选时间单位（milliseconds, seconds, minutes, hours）
 debug: true或false，默认值为false。当值为true时，会输出logback内部状态信息。换句话说，设定为true时，可理解为，能够实时查看logback的内部运行状态。
 -->
-<configuration scan="true" scanPeriod="60 seconds" debug="true">
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!--
     appender，自定义输出策略。
     name: 唯一名称。
-    class: 类名，可以理解为输出的类别，常用类别有ch.qos.logback.core.ConsoleAppender（控制台输出）, ch.qos.logback.core.FileAppender（文件输出）, ch.qos.logback.core.rolling.RollingFileAppender（Rolling方式文件输出）...
+    class: 类名，可以理解为输出的类别，常用类别有ch.grailslm.lvchanglong.logbackback.core.ConsoleAppender（控制台输出）, ch.grailslm.lvchanglong.logbackback.core.FileAppender（文件输出）, ch.grailslm.lvchanglong.logbackback.core.rolling.RollingFileAppender（Rolling方式文件输出）...
     -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <!--
@@ -19,7 +19,7 @@ debug: true或false，默认值为false。当值为true时，会输出logback内
         <append>true</append>
         <!--
         encoder（或layout），负责日志信息格式化及实际输出工作。但有一点，需要特别注意，某些appender没有也不需要有Encoder或Layout，如SocketAppender
-        class: 默认值ch.qos.logback.classic.encoder.PatternLayoutEncoder
+        class: 默认值ch.grailslm.lvchanglong.logbackback.classic.encoder.PatternLayoutEncoder
         -->
         <encoder>
             <!--

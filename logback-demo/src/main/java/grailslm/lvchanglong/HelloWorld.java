@@ -10,7 +10,7 @@ public class HelloWorld {
         Logger logger = LoggerFactory.getLogger("grailslm.lvchanglong.HelloWorld"); //root
         logger.debug("Hello World !!!");
 
-//        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-//        StatusPrinter.print(lc); //可简单理解为，查看logback实时运行状态
+        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        StatusPrinter.print(lc); //可简单理解为，查看logback实时运行状态
     }
 }
