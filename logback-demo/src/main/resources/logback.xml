@@ -77,7 +77,7 @@ debug: true或false，默认值为false。当值为true时，会输出logback内
 
     <!--
     举例说明一下，首先，logger(grailslm.lvchanglong.HelloWorld) -> logger(grailslm.lvchanglong)
-    门限等级未指定，覆盖继承后，最终门限等级是INFO
+    门限等级未指定，覆盖继承后，最终门限等级是INFO。但最好写明门限等级level是INFO！因为这样更利于维护！！！
     additivity未指定，默认值为true，appender继承方式为附加继承，最终appender为ROLLINGFILE
     -->
     <logger name="grailslm.lvchanglong.HelloWorld"/>
