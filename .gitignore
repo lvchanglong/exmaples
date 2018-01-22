@@ -49,3 +49,4 @@ Temporary Items
 *.log
 *.iml
 *.class
+logback-demo/.idea/workspace.xml
