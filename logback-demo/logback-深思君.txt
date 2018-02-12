@@ -68,5 +68,6 @@ encoder和layout，简单理解，主要负责日志信息在输出（打印）�
 log.debug("debug等级")
 log.info("info等级")
 log.error("error等级")
+没有任何一个包名或者类名叫StackTrace，换句话说，StackTrace是特殊的，是未经过滤的堆栈跟踪，简单理解，StackTrace logger是给框架记录错误日志用的。
 故意报个错...1/0...这些错误就可以理解为堆栈跟踪...
 本期就到这里！完结！撒花！可喜可贺！可喜可贺！！！
