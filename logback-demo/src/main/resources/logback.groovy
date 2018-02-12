@@ -24,7 +24,7 @@ appender("STDOUT", ConsoleAppender) {
     }
 }
 
-logger("grailslm.lvchanglong", INFO, ['ROLLINGFILE'], false)
+logger("grailslm.lvchanglong", INFO, ['ROLLINGFILE', 'STDOUT'], false)
 logger("grailslm.lvchanglong.HelloWorld", INFO)
 
-root(DEBUG, ["STDOUT", "FILE"])
+root(DEBUG, ["FILE"])

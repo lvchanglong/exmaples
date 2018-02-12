@@ -4,7 +4,7 @@ scan: 可以true或false，默认值为true。当值为true时，会每隔一段
 scanPeriod: 当scan为true时，此设置生效。可以设置扫描配置文件的时间间隔，默认为60秒。可选时间单位（milliseconds, seconds, minutes, hours）
 debug: true或false，默认值为false。当值为true时，会输出logback内部状态信息。换句话说，设定为true时，可理解为，能够实时查看logback的内部运行状态。
 -->
-<configuration scan="true" scanPeriod="60 seconds" debug="false">
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
     <!--
     appender，自定义输出策略。
     name: 唯一名称。
@@ -63,22 +63,23 @@ debug: true或false，默认值为false。当值为true时，会输出logback内
 
     <!--
     logger，负责日志信息的接收、过滤及以及委托appender进行输出。
-    name: 覆盖范围。可以是包名或者类名（如Hello）。同时揭示继承关系，root <- logger(grailslm) 如果有！！！<- logger(grailslm.lvchanglong) <- logger(grailslm.lvchanglong.Hello)
-    level: 设定日志门限等级，如果指定则进行“覆盖继承”。level“由低到高”依次是：ALL, TRACE, DEBUG, INFO, WARN, ERROR, OFF，策略是“高通”。
+    name: logger名称，一般是包名或者类名（如Hello）。同时暗示继承关系，root <- logger(grailslm) 如果有！！！<- logger(grailslm.lvchanglong) <- logger(grailslm.lvchanglong.Hello)
+    level: 设定日志门限等级，如果指定则进行覆盖继承。level“由低到高”依次是：ALL, TRACE, DEBUG, INFO, WARN, ERROR, OFF，策略是“高通”。
     additivity: true或false，决定着appender的继承方式。值为true时，是附加继承；值为false时，是覆盖继承。
 
     举例说明一下，首先，logger(grailslm.lvchanglong) -> root
     root的门限等级是DEBUG，logger(grailslm.lvchanglong)门限等级是INFO，覆盖继承后，最终门限等级是INFO
-    root的appender是"FILE", "STDOUT"，logger(grailslm.lvchanglong)的appender是ROLLINGFILE，additivity="false"，覆盖继承，最终appender为ROLLINGFILE
+    root的appender是"FILE"，logger(grailslm.lvchanglong)的appender是ROLLINGFILE，STDOUT，additivity="false"，即覆盖继承，最终appender为ROLLINGFILE，STDOUT
     -->
     <logger name="grailslm.lvchanglong" level="INFO" additivity="false">
         <appender-ref ref="ROLLINGFILE" /><!--将日志输出到动态创建的文件中-->
+        <appender-ref ref="STDOUT" /><!--将日志输出到控制台中-->
     </logger>
 
     <!--
     举例说明一下，首先，logger(grailslm.lvchanglong.HelloWorld) -> logger(grailslm.lvchanglong)
     门限等级未指定，覆盖继承后，最终门限等级是INFO。但最好写明门限等级level是INFO！因为这样更利于维护！！！
-    additivity未指定，默认值为true，appender继承方式为附加继承，最终appender为ROLLINGFILE
+    additivity未指定，默认值为true，appender继承方式为附加继承，最终appender为ROLLINGFILE，STDOUT
     -->
     <logger name="grailslm.lvchanglong.HelloWorld"/>
 
@@ -87,6 +88,5 @@ debug: true或false，默认值为false。当值为true时，会输出logback内
     -->
     <root level="DEBUG">
         <appender-ref ref="FILE" /><!--将日志输出到“指定”的文件中-->
-        <appender-ref ref="STDOUT" /><!--将日志输出到控制台中-->
     </root>
 </configuration>
